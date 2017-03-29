@@ -1,11 +1,12 @@
 #include <CapacitiveSensor.h>
 
 #define NB_OF_SENSORS 3
+#define SEND_PIN 2
 
 CapacitiveSensor sensors[NB_OF_SENSORS] = {
-  CapacitiveSensor(2, 4),
-  CapacitiveSensor(2, 7),
-  CapacitiveSensor(2, 8)
+  CapacitiveSensor(SEND_PIN, 4),
+  CapacitiveSensor(SEND_PIN, 7),
+  CapacitiveSensor(SEND_PIN, 8)
 };
 
 void setup()
