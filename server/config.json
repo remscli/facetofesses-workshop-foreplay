@@ -1,0 +1,46 @@
+{
+  "boards": [
+    {
+      "id": "A",
+      "port": ""
+    }
+  ],
+  "erogenousZones" : [
+    {
+      "name": "breast",
+      "boardID": "A",
+      "availableExcitation": 50,
+      "sensors": [
+        {
+          "name": "nipple",
+          "pin": "A0",
+          "excitationPower": 3
+        }
+      ]
+    },
+    {
+      "name": "breast",
+      "boardID": "A",
+      "availableExcitation": 50,
+      "sensors": [
+        {
+          "name": "upperSensor",
+          "pin": "A3",
+          "excitationPower": 2
+        }
+      ]
+    },
+    {
+      "name": "breast",
+      "boardID": "A",
+      "availableExcitation": 50,
+      "sensors": [
+        {
+          "name": "middleSensor",
+          "pin": "A5",
+          "excitationPower": 1
+        }
+      ]
+    }
+  ]
+}
