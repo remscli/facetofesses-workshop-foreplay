@@ -6,6 +6,7 @@ class ErogenousZone {
     this.name = params.name;
     this.port = params.port;
     this.availableExcitation = params.availableExcitation;
+    this.boardID = params.boardID;
     this.givenExcitation = 0;
     this.sensors = params.sensors.map((sensor) => new Sensor(sensor));
     this.isTouched = false;

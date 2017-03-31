@@ -26,6 +26,7 @@
 #include <Servo.h>
 #include <Wire.h>
 #include <Firmata.h>
+#include <CapacitiveSensor.h>
 
 #define I2C_WRITE                   B00000000
 #define I2C_READ                    B00001000
@@ -41,6 +42,15 @@
 
 // the minimum interval for sampling analog input
 #define MINIMUM_SAMPLING_INTERVAL   1
+
+
+#define NB_OF_SENSORS 3
+#define SEND_PIN 2
+CapacitiveSensor sensors[NB_OF_SENSORS] = {
+  CapacitiveSensor(SEND_PIN, 4),
+  CapacitiveSensor(SEND_PIN, 7),
+  CapacitiveSensor(SEND_PIN, 8)
+};
 
 
 /*==============================================================================
@@ -771,6 +781,12 @@ void setup()
   // Firmata.begin(Serial1);
   // However do not do this if you are using SERIAL_MESSAGE
 
+
+  // Disable Autocalibration
+  for (int i = 0; i < NB_OF_SENSORS; i++) {
+    sensors[i].set_CS_AutocaL_Millis(0xFFFFFFFF);
+  }
+   
   Firmata.begin(57600);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for ATmega32u4-based boards and Arduino 101
@@ -815,6 +831,12 @@ void loop()
         readAndReportData(query[i].addr, query[i].reg, query[i].bytes, query[i].stopTX);
       }
     }
+  }
+  
+  // SEND SENSORS VALUES TO HOST
+  for (int i = 0; i < NB_OF_SENSORS; i++) {
+    long value =  sensors[i].capacitiveSensor(30);
+    Firmata.sendAnalog(i, value);
   }
 
 #ifdef FIRMATA_SERIAL_FEATURE

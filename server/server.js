@@ -8,11 +8,11 @@ const ErogenousZone = require('./erogenous-zone');
 const ExcitationManager = require('./excitation-manager');
 
 // Arduino board is connected
-boards.on("ready", () => {
+boards.on("ready", function() {
   console.log("Boards are ready");
 
   let erogenousZones = config.erogenousZones.map((erogenousZone) => new ErogenousZone(erogenousZone));
-  let excitationManager = new ExcitationManager({erogenousZones: erogenousZones});
+  let excitationManager = new ExcitationManager({boards: this, erogenousZones: erogenousZones});
 
   // // WebSocket connection is open
   // socket.on('connect', () => {
