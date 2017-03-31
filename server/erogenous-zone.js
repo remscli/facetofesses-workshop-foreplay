@@ -1,5 +1,5 @@
 const Sensor = require('./sensor');
-const REGENERATION_TIME = 10000; // Time necessary for a erogenous zone to become erogenous back
+const REGENERATION_TIME = 15000; // Time necessary for a erogenous zone to become erogenous back
 
 class ErogenousZone {
   constructor(params) {

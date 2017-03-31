@@ -15,26 +15,12 @@
           "name": "nipple",
           "pin": 0,
           "excitationPower": 3
-        }
-      ]
-    },
-    {
-      "name": "breast",
-      "boardID": "A",
-      "availableExcitation": 50,
-      "sensors": [
+        },
         {
           "name": "upperSensor",
           "pin": 1,
           "excitationPower": 2
-        }
-      ]
-    },
-    {
-      "name": "breast",
-      "boardID": "A",
-      "availableExcitation": 50,
-      "sensors": [
+        },
         {
           "name": "middleSensor",
           "pin": 2,
