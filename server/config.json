@@ -1,4 +1,8 @@
 {
+  "constants": {
+    "REGENERATION_TIME": 15000,
+    "UPDATE_INTERVAL": 500
+  },
   "boards": [
     {
       "id": "A",

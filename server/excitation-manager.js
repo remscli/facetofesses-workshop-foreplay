@@ -1,3 +1,4 @@
+const config = require('./config.json');
 const five = require("johnny-five");
 
 class ExcitationManager {
@@ -13,10 +14,10 @@ class ExcitationManager {
   measureSensors() {
     this.erogenousZones.forEach((erogenousZone) => {
       erogenousZone.sensors.forEach((sensor) => {
-        this.boards.each(function(board) {
+        this.boards.each((board) => {
           if (board.id === erogenousZone.boardID) {
-            board.analogRead(sensor.pin, function(val) {
-              if (val > 200) {
+            board.analogRead(sensor.pin, (val) => {
+              if (val > 800) {
                 sensor.isTouched = true;
               }
             });
@@ -27,7 +28,7 @@ class ExcitationManager {
   }
 
   manageExcitation() {
-    let loop = setInterval(checkSensors.bind(this), 500);
+    let loop = setInterval(checkSensors.bind(this), config.constants.UPDATE_INTERVAL);
 
     function checkSensors() {
       let touchedSensors = [];
@@ -38,9 +39,9 @@ class ExcitationManager {
             let sensorTouchData = erogenousZone.touch(sensor);
             this.excitation += sensorTouchData.producedExcitation;
             touchedSensors.push(sensor);
-            debug += "  TOUCHED   "
+            debug += "  TOUCHED   ";
           } else {
-            debug += "            "
+            debug += "            ";
           }
         });
       });
@@ -61,7 +62,7 @@ class ExcitationManager {
 
   decreaseExcitation() {
     this.excitation -= 2;
-    if (this.excitation < this.excitationRange.min) this.excitation = this.excitationRange.min
+    if (this.excitation < this.excitationRange.min) this.excitation = this.excitationRange.min;
   }
 
   end() {

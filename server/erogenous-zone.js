@@ -1,5 +1,5 @@
 const Sensor = require('./sensor');
-const REGENERATION_TIME = 15000; // Time necessary for a erogenous zone to become erogenous back
+const config = require('./config.json');
 
 class ErogenousZone {
   constructor(params) {
@@ -14,7 +14,6 @@ class ErogenousZone {
   }
 
   touch(sensor) {
-    // Calculate excitation produced
     let producedExcitation = this.getProducedExcitation(sensor);
 
     if (producedExcitation) {
@@ -25,28 +24,29 @@ class ErogenousZone {
     sensor.isTouched = false;
     sensor.lastTouchDate = Date.now();
 
-    console.log(producedExcitation);
     return {producedExcitation: producedExcitation};
   }
 
   getProducedExcitation(sensor) {
-    let producedExcitation = sensor.excitationPower / 2;
+    let producedExcitation = sensor.stimulate();
 
-    console.log(this.givenExcitation + producedExcitation);
-    console.log(this.availableExcitation);
-    // Ensure that given excitation doesn't exceed available excitation
-    if (this.givenExcitation + producedExcitation >= this.availableExcitation) {
-      
-      // Allow excitation to be given with this erogenous zone if it hasn't been touched for more that regeneration time
-      console.log(`Time : ${Date.now() - this.lastTouchDate}`);
-      if (Date.now() - this.lastTouchDate > REGENERATION_TIME) {
+    if (this.isExcitable(producedExcitation)) {
+      return producedExcitation;
+    } else {
+      if (this.isRegenerable()) {
         this.givenExcitation = this.availableExcitation * 0.666;
       } else {
         return 0;
       }
     }
-    
-    return producedExcitation;
+  }
+
+  isExcitable(producedExcitation) {
+    return this.givenExcitation + producedExcitation <= this.availableExcitation;
+  }
+
+  isRegenerable() {
+    return Date.now() - this.lastTouchDate > config.constants.REGENERATION_TIME;
   }
 }
 
