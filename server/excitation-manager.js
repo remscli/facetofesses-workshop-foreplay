@@ -3,10 +3,10 @@ const five = require("johnny-five");
 
 class ExcitationManager {
   constructor(params) {
-    this.excitation = 0;
     this.boards = params.boards;
     this.erogenousZones = params.erogenousZones;
     this.excitationRange = {min: 0, max: 100};
+    this.currentExcitation = this.excitationRange.min;
     this.measureSensors();
     this.manageExcitation();
   }
@@ -37,7 +37,7 @@ class ExcitationManager {
         erogenousZone.sensors.forEach((sensor) => {
           if (sensor.isTouched) {
             let sensorTouchData = erogenousZone.touch(sensor);
-            this.excitation += sensorTouchData.producedExcitation;
+            this.currentExcitation += sensorTouchData.producedExcitation;
             touchedSensors.push(sensor);
             debug += "  TOUCHED   ";
           } else {
@@ -50,19 +50,19 @@ class ExcitationManager {
       if (touchedSensors.length == 0) this.decreaseExcitation();
 
       // Finish when excitation reach the maximum
-      if (this.excitation >= this.excitationRange.max) {
+      if (this.currentExcitation >= this.excitationRange.max) {
         clearInterval(loop);
         this.end();
         return;
       }
 
-      console.log(`EXCITATION : ${Math.round(this.excitation)}   -   ` + debug);
+      console.log(`EXCITATION : ${Math.round(this.currentExcitation)}   -   ` + debug);
     }
   }
 
   decreaseExcitation() {
-    this.excitation -= 2;
-    if (this.excitation < this.excitationRange.min) this.excitation = this.excitationRange.min;
+    this.currentExcitation -= 2;
+    if (this.currentExcitation < this.excitationRange.min) this.currentExcitation = this.excitationRange.min;
   }
 
   end() {

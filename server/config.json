@@ -18,7 +18,8 @@
         {
           "name": "nipple",
           "pin": 0,
-          "excitationPower": 3
+          "excitationPower": 3,
+          "audio": "sound-test.mp3"
         },
         {
           "name": "upperSensor",
