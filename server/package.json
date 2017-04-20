@@ -4,11 +4,11 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "express": "^4.15.2",
     "johnny-five": "^0.10.6",
-    "socket.io-client": "^1.7.3",
-    "lame": "^1.2.4",
-    "speaker": "^0.3.0",
-    "tone": "^0.10.0"
+    "opn": "^4.0.2",
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3"
   },
   "devDependencies": {},
   "scripts": {

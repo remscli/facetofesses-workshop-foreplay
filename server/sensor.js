@@ -1,5 +1,4 @@
 const config = require('./config.json');
-const AudioManager = require('./audio-manager');
 
 class Sensor {
   constructor(params) {
@@ -12,14 +11,6 @@ class Sensor {
   }
 
   stimulate() {
-    if (this.audio && !this.audioPlayed) {
-      let audioManager = new AudioManager();
-      if (!audioManager.isPlaying) {
-        audioManager.play(this.audio);
-        this.audioPlayed = true;
-      }
-    }
-
     this.lastTouchDate = Date.now();
 
     // Divide sensor's excitation power by two because it's called twice per second

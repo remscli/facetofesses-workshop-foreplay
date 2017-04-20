@@ -1,5 +1,9 @@
 {
+  "sounds": {
+    "heartbeat": "heartbeat.mp3"
+  },
   "constants": {
+    "WEBPAGE_PORT": 4500,
     "REGENERATION_TIME": 15000,
     "UPDATE_INTERVAL": 500
   },
