@@ -4,10 +4,15 @@
 
 Connect the Arduino board and then upload the sketch to it.
 
-Start johnny five powered server : 
+Start node.js + johnny five server : 
 ```
 $ cd server
 $ npm install
 $ npm run start
+```
+
+And start dev tools (browserify) :
+
+```
 $ npm run dev
 ```
