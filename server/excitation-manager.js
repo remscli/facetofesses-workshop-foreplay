@@ -1,5 +1,6 @@
 const config = require('./config.json');
 const five = require("johnny-five");
+const ClientSocket = require("./client-socket");
 
 class ExcitationManager {
   constructor(params) {

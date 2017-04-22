@@ -9,4 +9,5 @@ Start johnny five powered server :
 $ cd server
 $ npm install
 $ npm run start
+$ npm run dev
 ```

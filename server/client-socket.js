@@ -13,9 +13,18 @@ class ClientSocket {
 
   init () {
     this.io.on('connection', (socket) => {
+      console.log("CLIENT SOCKET CONNECTED");
       this.socket = socket;
-      this.socket.emit('play', { hello: 'world' });
+
+      // FOR DEV ONLY - REMOVE IT WHEN ARDUINO CARD IS CONNECTED
+      this.socket.emit('ready');
     });
+  }
+
+  emit (type, data) {
+    if (!this.socket) return;
+
+    this.socket.emit(type, data);
   }
 }
 
