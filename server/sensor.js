@@ -14,8 +14,10 @@ class Sensor {
   stimulate() {
     this.lastTouchDate = Date.now();
 
-    if (this.audio && !this.audioPlayed) {
-      new ClientSocket().emit('play', { filename: this.audio, type: 'VOICE' });
+    let clientSocket = new ClientSocket();
+
+    if (this.audio && !this.audioPlayed && !clientSocket.isSpeaking) {
+      clientSocket.emit('play', { filename: this.audio, type: 'VOICE' });
       this.audioPlayed = true;
     }
 

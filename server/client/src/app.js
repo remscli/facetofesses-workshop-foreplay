@@ -49,7 +49,11 @@ var App = {
   onPlay: function (params) {
     console.log("PLAY", params);
     var audio = new Audio(params);
-    AudioManager.play(audio);
+    AudioManager.play(audio, {
+      onEnd: function () {
+        socket.emit('playEnd', params);
+      }
+    });
     this.playedAudios[audio.filename] = audio;
   }
 };
