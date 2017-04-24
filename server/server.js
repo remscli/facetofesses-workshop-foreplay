@@ -33,16 +33,12 @@ app.listen(config.constants.WEBPAGE_PORT, () => {
 
 let clientSocket = new ClientSocket(io);
 
-clientSocket.emit('ready');
-
 // Arduino board is connected
 boards.on("ready", function() {
   console.log("Boards are ready");
 
   let erogenousZones = config.erogenousZones.map((erogenousZone) => new ErogenousZone(erogenousZone));
   let excitationManager = new ExcitationManager({boards: this, erogenousZones: erogenousZones});
-
-  clientSocket.emit('ready');
 
   // // WebSocket connection is open
   // socket.on('connect', () => {

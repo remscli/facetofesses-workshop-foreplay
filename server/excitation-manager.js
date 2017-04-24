@@ -8,6 +8,7 @@ class ExcitationManager {
     this.erogenousZones = params.erogenousZones;
     this.excitationRange = {min: 0, max: 100};
     this.currentExcitation = this.excitationRange.min;
+    this.clientSocket = new ClientSocket();
     this.measureSensors();
     this.manageExcitation();
   }
@@ -56,6 +57,12 @@ class ExcitationManager {
         this.end();
         return;
       }
+
+      console.log("UPDATE");
+      this.clientSocket.emit('update', {
+        currentExcitation: this.currentExcitation,
+        excitationRange: this.excitationRange
+      });
 
       console.log(`EXCITATION : ${Math.round(this.currentExcitation)}   -   ` + debug);
     }

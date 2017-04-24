@@ -6,8 +6,9 @@
 var Audio = function(params) {
   this.filename = params.filename;
   this.loop = params.loop;
+  this.type = params.type;
   this._interval = params.interval;
-  this._rate = params.rate;
+  this._rate = params.rate || 1;
 };
 
 /**

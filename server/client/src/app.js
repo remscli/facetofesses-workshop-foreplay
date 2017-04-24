@@ -1,26 +1,31 @@
 var socket = require('socket.io-client')('http://localhost:4501');
 var Audio = require('./audio');
 var AudioManager = require('./audio-manager');
+var RangeScaler = require('./range-scaler');
 var heartbeatFilename = 'heartbeat.mp3';
+var heartbeatConfig = {
+  interval: {min: 700, max: 200},
+  rate: {min: 1, max: 1.3}
+};
 
 var App = {
   init: function() {
     this.playedAudios = [];
     this.initSocketsEvents();
+    this.start();
   },
 
   initSocketsEvents: function () {
-    socket.on('ready', this.onReady.bind(this));
     socket.on('update', this.onUpdate.bind(this));
     socket.on('play', this.onPlay.bind(this));
   },
 
-  onReady: function () {
+  start: function () {
     this.heartbeat = new Audio({
       filename: heartbeatFilename,
       loop: true,
-      interval: 700,
-      rate: 1
+      interval: heartbeatConfig.interval.min,
+      rate: heartbeatConfig.rate.min
     });
     AudioManager.play(this.heartbeat);
     this.playedAudios[heartbeatFilename] = this.heartbeat;
@@ -28,21 +33,25 @@ var App = {
   },
 
   onUpdate: function (data) {
-    console.log(data);
-
-    var newRate = this.heartbeat.rate() + 0.1;
-    newRate = newRate <= 1.5 ? newRate : 1.5;
+    var newRate = new RangeScaler({
+      value: data.currentExcitation,
+      range: data.excitationRange
+    }).scaleTo(heartbeatConfig.rate.min, heartbeatConfig.rate.max);
     this.heartbeat.rate(newRate);
 
-    var newInterval = this.heartbeat.interval() - 100;
-    newInterval = newInterval >= 200 ? newInterval : 200;
+    var newInterval = new RangeScaler({
+      value: data.currentExcitation,
+      range: data.excitationRange
+    }).scaleTo(heartbeatConfig.interval.min, heartbeatConfig.interval.max);
     this.heartbeat.interval(newInterval);
   },
 
-  onPlay: function () {
-
+  onPlay: function (params) {
+    console.log("PLAY", params);
+    var audio = new Audio(params);
+    AudioManager.play(audio);
+    this.playedAudios[audio.filename] = audio;
   }
-
 };
 
 App.init();
