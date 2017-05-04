@@ -24,7 +24,7 @@ class ErogenousZone {
     sensor.isTouched = false;
     sensor.lastTouchDate = Date.now();
 
-    return {producedExcitation: producedExcitation};
+    return {producedExcitation: producedExcitation || 0};
   }
 
   getProducedExcitation(sensor) {
