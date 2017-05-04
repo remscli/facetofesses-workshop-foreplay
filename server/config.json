@@ -10,7 +10,11 @@
   "boards": [
     {
       "id": "A",
-      "port": ""
+      "port": "/dev/cu.usbmodem1421"
+    },
+    {
+      "id": "B",
+      "port": "/dev/cu.usbmodem1411"
     }
   ],
   "erogenousZones" : [
@@ -32,6 +36,29 @@
         },
         {
           "name": "middleSensor",
+          "pin": 2,
+          "excitationPower": 1
+        }
+      ]
+    },
+    {
+      "name": "penis",
+      "boardID": "B",
+      "availableExcitation": 50,
+      "sensors": [
+        {
+          "name": "head",
+          "pin": 0,
+          "excitationPower": 3,
+          "audio": "sound-test.mp3"
+        },
+        {
+          "name": "testicle",
+          "pin": 1,
+          "excitationPower": 2
+        },
+        {
+          "name": "corpusCavernosum",
           "pin": 2,
           "excitationPower": 1
         }
