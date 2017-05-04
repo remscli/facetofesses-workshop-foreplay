@@ -19,7 +19,7 @@ class ExcitationManager {
         this.boards.each((board) => {
           if (board.id === erogenousZone.boardID) {
             board.analogRead(sensor.pin, (val) => {
-              if (val > 800) {
+              if (val > 600) {
                 sensor.isTouched = true;
               }
             });
