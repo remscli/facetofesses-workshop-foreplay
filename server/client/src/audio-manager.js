@@ -2,13 +2,19 @@ var howler = require('howler');
 
 var AudioManager = {
   isSpeaking: false,
+  howls: [],
 
   play: function (audio, params) {
-    console.log('rate :' + audio.rate() + ' | interval : ' + audio.interval());
+    console.log(audio.filename + ' -- rate :' + audio.rate() + ' | interval : ' + audio.interval());
 
     if (this.isSpeaking && audio.type == 'VOICE') return;
 
-    if (audio.type === 'VOICE') this.isSpeaking = true;
+    var volume = 0.2;
+
+    if (audio.type === 'VOICE') {
+      this.isSpeaking = true;
+      volume = 1;
+    }
 
     var howl = new howler.Howl({
       src: ['audio/' + audio.filename],
@@ -21,6 +27,9 @@ var AudioManager = {
 
     howl.play();
     howl.rate(audio.rate());
+    howl.volume(volume);
+
+    this.howls.push(howl);
   },
 
   onEnd: function (audio, params) {
@@ -35,6 +44,12 @@ var AudioManager = {
         this.play(audio);
       }, audio.interval() || 0);
     }
+  },
+
+  stopAll() {
+    this.howls.forEach(function (howl) {
+      howl.stop();
+    });
   }
 };
 

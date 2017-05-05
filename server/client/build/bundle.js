@@ -13,15 +13,17 @@ var App = {
   init: function() {
     this.playedAudios = [];
     this.initSocketsEvents();
-    this.start();
   },
 
   initSocketsEvents: function () {
+    socket.on('connect', this.onStart.bind(this));
     socket.on('update', this.onUpdate.bind(this));
     socket.on('play', this.onPlay.bind(this));
+    socket.on('disconnect', this.onDisconnect.bind(this));
   },
 
-  start: function () {
+  onStart: function () {
+    console.log("START");
     this.heartbeat = new Audio({
       filename: heartbeatFilename,
       loop: true,
@@ -30,7 +32,6 @@ var App = {
     });
     AudioManager.play(this.heartbeat);
     this.playedAudios[heartbeatFilename] = this.heartbeat;
-    console.log(this);
   },
 
   onUpdate: function (data) {
@@ -56,6 +57,13 @@ var App = {
       }
     });
     this.playedAudios[audio.filename] = audio;
+  },
+
+
+  onDisconnect: function () {
+    console.log("DISCONNECTED");
+    AudioManager.stopAll();
+    this.playedAudios = [];
   }
 };
 
@@ -65,13 +73,19 @@ var howler = require('howler');
 
 var AudioManager = {
   isSpeaking: false,
+  howls: [],
 
   play: function (audio, params) {
-    console.log('rate :' + audio.rate() + ' | interval : ' + audio.interval());
+    console.log(audio.filename + ' -- rate :' + audio.rate() + ' | interval : ' + audio.interval());
 
     if (this.isSpeaking && audio.type == 'VOICE') return;
 
-    if (audio.type === 'VOICE') this.isSpeaking = true;
+    var volume = 0.2;
+
+    if (audio.type === 'VOICE') {
+      this.isSpeaking = true;
+      volume = 1;
+    }
 
     var howl = new howler.Howl({
       src: ['audio/' + audio.filename],
@@ -84,6 +98,9 @@ var AudioManager = {
 
     howl.play();
     howl.rate(audio.rate());
+    howl.volume(volume);
+
+    this.howls.push(howl);
   },
 
   onEnd: function (audio, params) {
@@ -98,6 +115,12 @@ var AudioManager = {
         this.play(audio);
       }, audio.interval() || 0);
     }
+  },
+
+  stopAll() {
+    this.howls.forEach(function (howl) {
+      howl.stop();
+    });
   }
 };
 

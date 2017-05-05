@@ -5,13 +5,16 @@ class Sensor {
   constructor(params) {
     this.name = params.name;
     this.pin = params.pin;
+    this.threshold = params.threshold;
     this.excitationPower = params.excitationPower;
     this.audio = params.audio;
     this.lastTouchDate = null;
     this.audioPlayed = false;
+    this.isTouched = false;
   }
 
   stimulate() {
+    this.isTouched = false;
     this.lastTouchDate = Date.now();
 
     let clientSocket = new ClientSocket();

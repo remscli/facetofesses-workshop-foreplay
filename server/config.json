@@ -4,7 +4,7 @@
   },
   "constants": {
     "WEBPAGE_PORT": 4500,
-    "REGENERATION_TIME": 15000,
+    "REGENERATION_TIME": 10000,
     "UPDATE_INTERVAL": 500
   },
   "boards": [
@@ -26,17 +26,20 @@
         {
           "name": "nipple",
           "pin": 0,
+          "threshold": 500,
           "excitationPower": 3,
-          "audio": "sound-test.mp3"
+          "audio": "voice-nipple.wav"
         },
         {
           "name": "upperSensor",
           "pin": 1,
+          "threshold": 500,
           "excitationPower": 2
         },
         {
           "name": "middleSensor",
           "pin": 2,
+          "threshold": 500,
           "excitationPower": 1
         }
       ]
@@ -49,17 +52,20 @@
         {
           "name": "head",
           "pin": 0,
+          "threshold": 500,
           "excitationPower": 3,
-          "audio": "sound-test.mp3"
+          "audio": "voice-penis-head.wav"
         },
         {
           "name": "testicle",
           "pin": 1,
+          "threshold": 500,
           "excitationPower": 2
         },
         {
           "name": "corpusCavernosum",
           "pin": 2,
+          "threshold": 500,
           "excitationPower": 1
         }
       ]

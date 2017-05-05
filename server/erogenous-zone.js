@@ -9,7 +9,6 @@ class ErogenousZone {
     this.boardID = params.boardID;
     this.givenExcitation = 0;
     this.sensors = params.sensors.map((sensor) => new Sensor(sensor));
-    this.isTouched = false;
     this.lastTouchDate = null;
   }
 
@@ -21,7 +20,6 @@ class ErogenousZone {
       this.givenExcitation += producedExcitation;
     }
 
-    sensor.isTouched = false;
     sensor.lastTouchDate = Date.now();
 
     return {producedExcitation: producedExcitation || 0};
