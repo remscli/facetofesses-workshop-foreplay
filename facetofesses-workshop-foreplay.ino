@@ -44,12 +44,14 @@
 #define MINIMUM_SAMPLING_INTERVAL   1
 
 
-#define NB_OF_SENSORS 3
+#define NB_OF_SENSORS 5
 #define SEND_PIN 2
 CapacitiveSensor sensors[NB_OF_SENSORS] = {
   CapacitiveSensor(SEND_PIN, 4),
   CapacitiveSensor(SEND_PIN, 7),
-  CapacitiveSensor(SEND_PIN, 8)
+  CapacitiveSensor(SEND_PIN, 8),
+  CapacitiveSensor(SEND_PIN, 12),
+  CapacitiveSensor(SEND_PIN, 13)
 };
 
 
