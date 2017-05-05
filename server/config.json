@@ -45,6 +45,20 @@
       ]
     },
     {
+      "name": "clitoris",
+      "boardID": "A",
+      "availableExcitation": 50,
+      "sensors": [
+        {
+          "name": "clitorisSensor",
+          "pin": 3,
+          "threshold": 500,
+          "excitationPower": 4,
+          "audio": "voice-clitoris.wav"
+        }
+      ]
+    },
+    {
       "name": "penis",
       "boardID": "B",
       "availableExcitation": 50,
@@ -52,20 +66,20 @@
         {
           "name": "head",
           "pin": 0,
-          "threshold": 700,
+          "threshold": 500,
           "excitationPower": 3,
           "audio": "voice-penis-head.wav"
         },
         {
           "name": "testicle",
           "pin": 1,
-          "threshold": 700,
+          "threshold": 500,
           "excitationPower": 2
         },
         {
           "name": "corpusCavernosum",
           "pin": 2,
-          "threshold": 700,
+          "threshold": 500,
           "excitationPower": 1
         }
       ]
