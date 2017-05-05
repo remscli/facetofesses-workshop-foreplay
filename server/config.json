@@ -52,20 +52,20 @@
         {
           "name": "head",
           "pin": 0,
-          "threshold": 500,
+          "threshold": 700,
           "excitationPower": 3,
           "audio": "voice-penis-head.wav"
         },
         {
           "name": "testicle",
           "pin": 1,
-          "threshold": 500,
+          "threshold": 700,
           "excitationPower": 2
         },
         {
           "name": "corpusCavernosum",
           "pin": 2,
-          "threshold": 500,
+          "threshold": 700,
           "excitationPower": 1
         }
       ]

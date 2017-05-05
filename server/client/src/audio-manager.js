@@ -50,6 +50,8 @@ var AudioManager = {
     this.howls.forEach(function (howl) {
       howl.stop();
     });
+    this.howls = [];
+    this.isSpeaking = false;
   }
 };
 

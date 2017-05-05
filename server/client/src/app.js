@@ -3,6 +3,7 @@ var Audio = require('./audio');
 var AudioManager = require('./audio-manager');
 var RangeScaler = require('./range-scaler');
 var heartbeatFilename = 'heartbeat.mp3';
+var introductionFilename = 'voice-intro.wav';
 var heartbeatConfig = {
   interval: {min: 700, max: 200},
   rate: {min: 1, max: 1.3}
@@ -23,6 +24,8 @@ var App = {
 
   onStart: function () {
     console.log("START");
+
+    // HEARTBEAT
     this.heartbeat = new Audio({
       filename: heartbeatFilename,
       loop: true,
@@ -31,6 +34,14 @@ var App = {
     });
     AudioManager.play(this.heartbeat);
     this.playedAudios[heartbeatFilename] = this.heartbeat;
+
+    // INTRODUCTION
+    var voiceIntro = new Audio({
+      filename: introductionFilename,
+      type: 'VOICE'
+    });
+    AudioManager.play(voiceIntro);
+    this.playedAudios[voiceIntro.filename] = voiceIntro;
   },
 
   onUpdate: function (data) {
