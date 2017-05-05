@@ -9,13 +9,13 @@
     "johnny-five": "^0.10.6",
     "opn": "^4.0.2",
     "socket.io": "^1.7.3",
+    "concurrently": "^3.4.0",
     "socket.io-client": "^1.7.3"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
-    "dev": "watchify client/src/app.js -o client/build/bundle.js -v"
+    "start": "concurrently 'watchify client/src/app.js -o client/build/bundle.js -v' 'nodemon server.js'"
   },
   "repository": {
     "type": "git",
