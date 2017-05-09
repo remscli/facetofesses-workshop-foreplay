@@ -2,17 +2,18 @@
 
 const config = require('./config.json');
 const five = require("johnny-five");
-const boards = new five.Boards(config.boards, { timeout: 3600 });
-// const socket = require('socket.io-client')('http://localhost:5300');
-const ErogenousZone = require('./erogenous-zone');
-const ExcitationManager = require('./excitation-manager');
+const SockJS = require('sockjs-client');
 const express = require('express');
-const app = express();
+const http = require('http');
+const SocketIO = require('socket.io');
 const opn = require('opn');
 const ClientSocket = require("./client-socket");
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
+const ServerSocket = require("./server-socket");
+const ErogenousZone = require('./erogenous-zone');
+const ExcitationManager = require('./excitation-manager');
 
+let app = express();
+let server = http.Server(app);
 
 // Static files
 app.use(express.static('client'));
@@ -31,7 +32,15 @@ app.listen(config.constants.WEBPAGE_PORT, () => {
 // Open page in default browser
 // opn('http://localhost:' + config.constants.WEBPAGE_PORT);
 
+// Client socket
+let io = SocketIO(server);
 let clientSocket = new ClientSocket(io);
+
+// Server socket
+let sock = new SockJS('http://localhost:8080/ws');
+let serverSocket = new ServerSocket(sock);
+
+let boards = new five.Boards(config.boards, { timeout: 3600 });
 
 // Arduino board is connected
 boards.on("ready", function() {
@@ -39,19 +48,4 @@ boards.on("ready", function() {
 
   let erogenousZones = config.erogenousZones.map((erogenousZone) => new ErogenousZone(erogenousZone));
   let excitationManager = new ExcitationManager({boards: this, erogenousZones: erogenousZones});
-
-  // // WebSocket connection is open
-  // socket.on('connect', () => {
-  //   console.log("SOCKET CONNECTED");
-  // });
-  //
-  // // WebSocket new event is received
-  // socket.on('event', (data) => {
-  //
-  // });
-  //
-  // // WebSocket connection is close
-  // socket.on('disconnect', () => {
-  //   console.log("SOCKET DISCONNECTED");
-  // });
 });

@@ -1,6 +1,7 @@
 const config = require('./config.json');
 const five = require("johnny-five");
 const ClientSocket = require("./client-socket");
+const ServerSocket = require("./server-socket");
 
 class ExcitationManager {
   constructor(params) {
@@ -8,6 +9,7 @@ class ExcitationManager {
     this.erogenousZones = params.erogenousZones;
     this.excitationRange = {min: 0, max: 100};
     this.currentExcitation = this.excitationRange.min;
+    this.serverSocket = new ServerSocket();
     this.clientSocket = new ClientSocket();
     this.measureSensors();
     this.manageExcitation();
@@ -64,6 +66,8 @@ class ExcitationManager {
       });
 
       console.log(`EXCITATION : ${Math.round(this.currentExcitation)}   -   ` + debug);
+
+      this.serverSocket.emit({type: 'update', excitation: Math.round(this.currentExcitation)});
     }
   }
 
