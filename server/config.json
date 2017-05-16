@@ -10,50 +10,50 @@
   "boards": [
     {
       "id": "A",
-      "port": "/dev/cu.usbmodem1421"
+      "port": "/dev/cu.usbmodem14241"
     },
     {
       "id": "B",
-      "port": "/dev/cu.usbmodem1411"
+      "port": "/dev/cu.usbmodem14231"
     }
   ],
   "erogenousZones" : [
     {
       "name": "breast",
       "boardID": "A",
-      "availableExcitation": 50,
+      "availableExcitation": 80,
       "sensors": [
         {
           "name": "nipple",
           "pin": 0,
-          "threshold": 500,
+          "threshold": 300,
           "excitationPower": 3,
           "audio": "voice-nipple.wav"
         },
         {
           "name": "upperSensor",
           "pin": 1,
-          "threshold": 500,
+          "threshold": 200,
           "excitationPower": 2
         },
         {
           "name": "middleSensor",
           "pin": 2,
-          "threshold": 500,
-          "excitationPower": 1
+          "threshold": 200,
+          "excitationPower": 2
         }
       ]
     },
     {
       "name": "clitoris",
       "boardID": "A",
-      "availableExcitation": 50,
+      "availableExcitation": 80,
       "sensors": [
         {
           "name": "clitorisSensor",
           "pin": 3,
-          "threshold": 500,
-          "excitationPower": 4,
+          "threshold": 200,
+          "excitationPower": 3,
           "audio": "voice-clitoris.wav"
         }
       ]
@@ -61,26 +61,26 @@
     {
       "name": "penis",
       "boardID": "B",
-      "availableExcitation": 50,
+      "availableExcitation": 80,
       "sensors": [
         {
           "name": "head",
           "pin": 0,
-          "threshold": 500,
+          "threshold": 300,
           "excitationPower": 3,
           "audio": "voice-penis-head.wav"
         },
         {
-          "name": "testicle",
+          "name": "corpusCavernosum",
           "pin": 1,
-          "threshold": 500,
+          "threshold": 300,
           "excitationPower": 2
         },
         {
-          "name": "corpusCavernosum",
+          "name": "testicle",
           "pin": 2,
-          "threshold": 500,
-          "excitationPower": 1
+          "threshold": 300,
+          "excitationPower": 2
         }
       ]
     }
