@@ -3,12 +3,11 @@ let instance = null;
 class ServerSocket {
   constructor (sock) {
     if(!instance){
+      this.isSpeaking = false;
       instance = this;
       this.sock = sock;
       this.init();
     }
-
-    this.isSpeaking = false;
 
     return instance;
   }

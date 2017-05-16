@@ -13,6 +13,7 @@ class ExcitationManager {
     this.clientSocket = new ClientSocket();
     this.measureSensors();
     this.manageExcitation();
+    setTimeout(this.finishRunIn.bind(this), 3000);
   }
 
   measureSensors() {
@@ -21,7 +22,7 @@ class ExcitationManager {
         this.boards.each((board) => {
           if (board.id === erogenousZone.boardID) {
             board.analogRead(sensor.pin, (val) => {
-              if (val > sensor.threshold) {
+              if (val > sensor.threshold && sensor.runInDone) {
                 sensor.isTouched = true;
               }
             });
@@ -55,9 +56,9 @@ class ExcitationManager {
 
       // Finish when excitation reach the maximum
       if (this.currentExcitation >= this.excitationRange.max) {
+        this.currentExcitation = this.excitationRange.max;
         clearInterval(loop);
         this.end();
-        return;
       }
 
       this.clientSocket.emit('update', {
@@ -71,8 +72,16 @@ class ExcitationManager {
     }
   }
 
+  finishRunIn() {
+    this.erogenousZones.forEach((erogenousZone) => {
+      erogenousZone.sensors.forEach((sensor) => {
+        sensor.runInDone = true;
+      });
+    });
+  }
+
   decreaseExcitation() {
-    this.currentExcitation -= 2;
+    this.currentExcitation -= 1;
     if (this.currentExcitation < this.excitationRange.min) this.currentExcitation = this.excitationRange.min;
   }
 

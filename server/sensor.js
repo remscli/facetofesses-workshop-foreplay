@@ -11,6 +11,7 @@ class Sensor {
     this.lastTouchDate = null;
     this.audioPlayed = false;
     this.isTouched = false;
+    this.runInDone = false;
   }
 
   stimulate() {
