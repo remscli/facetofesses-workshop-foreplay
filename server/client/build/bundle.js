@@ -96,6 +96,7 @@ var App = {
     console.log("DISCONNECTED");
     AudioManager.stopAll();
     this.playedAudios = [];
+    this.firstTouchPlayed = false;
   }
 };
 
@@ -216,12 +217,14 @@ module.exports={
     "heartbeat": "heartbeat.mp3",
     "intro": "voice-intro.wav",
     "firstTouch": "voice-first-touch.wav",
+    "help": "voice-help.wav",
     "end": "voice-end.wav"
   },
   "constants": {
     "WEBPAGE_PORT": 4500,
     "REGENERATION_TIME": 10000,
-    "UPDATE_INTERVAL": 500
+    "UPDATE_INTERVAL": 500,
+    "TIME_BEFORE_HELP": 90000
   },
   "boards": [
     {

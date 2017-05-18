@@ -5,6 +5,7 @@ const ServerSocket = require("./server-socket");
 
 class ExcitationManager {
   constructor(params) {
+    this.playing = true;
     this.boards = params.boards;
     this.erogenousZones = params.erogenousZones;
     this.excitationRange = {min: 0, max: 100};
@@ -14,6 +15,7 @@ class ExcitationManager {
     this.measureSensors();
     this.manageExcitation();
     setTimeout(this.finishRunIn.bind(this), 3000);
+    setTimeout(this.playHelpMessage.bind(this), config.constants.TIME_BEFORE_HELP);
   }
 
   measureSensors() {
@@ -85,9 +87,21 @@ class ExcitationManager {
     if (this.currentExcitation < this.excitationRange.min) this.currentExcitation = this.excitationRange.min;
   }
 
+  playHelpMessage() {
+    console.log("PLAY HELP MESSAGE");
+    if (!this.playing) return;
+
+    if (!this.clientSocket.isSpeaking) {
+      this.clientSocket.emit('play', { filename: config.audios.help, type: 'VOICE' });
+    } else {
+      setTimeout(this.playHelpMessage.bind(this), 10000);
+    }
+  }
+
   end() {
     console.log("WORKSHOP FINISHED");
     this.clientSocket.emit('play', { filename: config.audios.end, type: 'VOICE' });
+    this.playing = false;
   }
 }
 
