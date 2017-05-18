@@ -105,6 +105,7 @@ var howler = require('howler');
 
 var AudioManager = {
   isSpeaking: false,
+  playing: false,
   howls: [],
 
   play: function (audio, params) {
@@ -130,9 +131,12 @@ var AudioManager = {
     howl.rate(audio.rate());
 
     this.howls.push(howl);
+    this.playing = true;
   },
 
   onEnd: function (audio, params) {
+    if (!this.playing) return;
+
     if (params && typeof params.onEnd === "function") params.onEnd();
 
     if (audio.type === 'VOICE') {
@@ -152,6 +156,7 @@ var AudioManager = {
     });
     this.howls = [];
     this.isSpeaking = false;
+    this.playing = false;
   }
 };
 

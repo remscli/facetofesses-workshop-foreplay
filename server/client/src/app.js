@@ -95,6 +95,7 @@ var App = {
     console.log("DISCONNECTED");
     AudioManager.stopAll();
     this.playedAudios = [];
+    this.firstTouchPlayed = false;
   }
 };
 
