@@ -50,7 +50,11 @@ var App = {
       filename: config.audios.intro,
       type: 'VOICE'
     });
-    AudioManager.play(voiceIntro);
+    AudioManager.play(voiceIntro, {
+      onEnd: function () {
+        socket.emit('start');
+      }
+    });
     this.playedAudios[voiceIntro.filename] = voiceIntro;
   },
 

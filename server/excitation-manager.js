@@ -14,8 +14,9 @@ class ExcitationManager {
     this.clientSocket = new ClientSocket();
     this.measureSensors();
     this.manageExcitation();
-    setTimeout(this.finishRunIn.bind(this), 3000);
     setTimeout(this.playHelpMessage.bind(this), config.constants.TIME_BEFORE_HELP);
+
+    this.clientSocket.on('start', this.start.bind(this));
   }
 
   measureSensors() {
@@ -24,7 +25,7 @@ class ExcitationManager {
         this.boards.each((board) => {
           if (board.id === erogenousZone.boardID) {
             board.analogRead(sensor.pin, (val) => {
-              if (val > sensor.threshold && sensor.runInDone) {
+              if (val > sensor.threshold && sensor.started) {
                 sensor.isTouched = true;
               }
             });
@@ -74,10 +75,10 @@ class ExcitationManager {
     }
   }
 
-  finishRunIn() {
+  start() {
     this.erogenousZones.forEach((erogenousZone) => {
       erogenousZone.sensors.forEach((sensor) => {
-        sensor.runInDone = true;
+        sensor.started = true;
       });
     });
   }
