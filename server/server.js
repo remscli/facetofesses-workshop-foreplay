@@ -42,7 +42,7 @@ let serverSocket = new ServerSocket(sock);
 
 let boards = new five.Boards(config.boards, { timeout: 3600 });
 
-// Arduino board is connected
+// When Arduino board is connected
 boards.on("ready", function() {
   console.log("Boards are ready");
 

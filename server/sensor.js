@@ -21,6 +21,7 @@ class Sensor {
     let clientSocket = new ClientSocket();
 
     if (this.audio && !this.audioPlayed && !clientSocket.isSpeaking) {
+      console.log('PLAY', this.audio);
       clientSocket.emit('play', { filename: this.audio, type: 'VOICE' });
       this.audioPlayed = true;
     }

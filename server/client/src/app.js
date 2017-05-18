@@ -2,14 +2,15 @@ var socket = require('socket.io-client')('http://localhost:4501');
 var Audio = require('./audio');
 var AudioManager = require('./audio-manager');
 var RangeScaler = require('./range-scaler');
-var heartbeatFilename = 'heartbeat.mp3';
-var introductionFilename = 'voice-intro.wav';
+var config = require('../../config.json');
 var heartbeatConfig = {
   interval: {min: 700, max: 200},
   rate: {min: 1, max: 1.3}
 };
 
 var App = {
+  firstTouchPlayed: false,
+
   init: function() {
     this.playedAudios = [];
     this.initSocketsEvents();
@@ -25,19 +26,28 @@ var App = {
   onStart: function () {
     console.log("START");
 
+    // AMBIENT
+    this.ambient = new Audio({
+      filename: config.audios.ambient,
+      loop: true
+    });
+    AudioManager.play(this.ambient);
+    this.playedAudios[config.audios.ambient] = this.ambient;
+
     // HEARTBEAT
     this.heartbeat = new Audio({
-      filename: heartbeatFilename,
+      filename: config.audios.heartbeat,
       loop: true,
       interval: heartbeatConfig.interval.min,
-      rate: heartbeatConfig.rate.min
+      rate: heartbeatConfig.rate.min,
+      volume: 0.3,
     });
     AudioManager.play(this.heartbeat);
-    this.playedAudios[heartbeatFilename] = this.heartbeat;
+    this.playedAudios[config.audios.heartbeat] = this.heartbeat;
 
     // INTRODUCTION
     var voiceIntro = new Audio({
-      filename: introductionFilename,
+      filename: config.audios.intro,
       type: 'VOICE'
     });
     AudioManager.play(voiceIntro);
@@ -56,6 +66,17 @@ var App = {
       range: data.excitationRange
     }).scaleTo(heartbeatConfig.interval.min, heartbeatConfig.interval.max);
     this.heartbeat.interval(newInterval);
+
+    // FIRST TOUCH
+    if (!this.firstTouchPlayed && data.currentExcitation > 5 && !AudioManager.isSpeaking) {
+      var voiceFirstTouch = new Audio({
+        filename: config.audios.firstTouch,
+        type: 'VOICE'
+      });
+      AudioManager.play(voiceFirstTouch);
+      this.playedAudios[voiceFirstTouch.filename] = voiceFirstTouch;
+      this.firstTouchPlayed = true;
+    }
   },
 
   onPlay: function (params) {

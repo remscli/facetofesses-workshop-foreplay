@@ -9,15 +9,13 @@ var AudioManager = {
 
     if (this.isSpeaking && audio.type == 'VOICE') return;
 
-    var volume = 0.2;
-
     if (audio.type === 'VOICE') {
       this.isSpeaking = true;
-      volume = 1;
     }
 
     var howl = new howler.Howl({
       src: ['audio/' + audio.filename],
+      volume: audio.volume,
       buffer: true,
       html5: true,
       onend: this.onEnd.bind(this, audio, params)
@@ -27,7 +25,6 @@ var AudioManager = {
 
     howl.play();
     howl.rate(audio.rate());
-    howl.volume(volume);
 
     this.howls.push(howl);
   },

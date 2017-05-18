@@ -1,6 +1,10 @@
 {
-  "sounds": {
-    "heartbeat": "heartbeat.mp3"
+  "audios": {
+    "ambient": "ambient.wav",
+    "heartbeat": "heartbeat.mp3",
+    "intro": "voice-intro.wav",
+    "firstTouch": "voice-first-touch.wav",
+    "end": "voice-end.wav"
   },
   "constants": {
     "WEBPAGE_PORT": 4500,

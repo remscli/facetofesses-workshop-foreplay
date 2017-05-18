@@ -87,6 +87,7 @@ class ExcitationManager {
 
   end() {
     console.log("WORKSHOP FINISHED");
+    this.clientSocket.emit('play', { filename: config.audios.end, type: 'VOICE' });
   }
 }
 
