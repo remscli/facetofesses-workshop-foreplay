@@ -51,7 +51,11 @@ var App = {
       filename: config.audios.intro,
       type: 'VOICE'
     });
-    AudioManager.play(voiceIntro);
+    AudioManager.play(voiceIntro, {
+      onEnd: function () {
+        socket.emit('start');
+      }
+    });
     this.playedAudios[voiceIntro.filename] = voiceIntro;
   },
 
@@ -110,6 +114,11 @@ var AudioManager = {
   howls: [],
 
   play: function (audio, params) {
+    this.playing = true;
+    this.playSound(audio, params);
+  },
+
+  playSound: function(audio, params) {
     console.log(audio.filename + ' -- rate :' + audio.rate() + ' | interval : ' + audio.interval());
 
     if (this.isSpeaking && audio.type == 'VOICE') return;
@@ -132,7 +141,6 @@ var AudioManager = {
     howl.rate(audio.rate());
 
     this.howls.push(howl);
-    this.playing = true;
   },
 
   onEnd: function (audio, params) {
@@ -146,7 +154,7 @@ var AudioManager = {
 
     if (audio.loop === true) {
       setTimeout(() => {
-        this.play(audio);
+        this.playSound(audio);
       }, audio.interval() || 0);
     }
   },
@@ -157,7 +165,7 @@ var AudioManager = {
     });
     this.howls = [];
     this.isSpeaking = false;
-    this.playing = false;
+    playing = false;
   }
 };
 
@@ -174,7 +182,7 @@ var Audio = function(params) {
   this.loop = params.loop;
   this.type = params.type;
   this.volume = params.volume || 0.9;
-  this._interval = params.interval;
+  this._interval = params.interval || 0;
   this._rate = params.rate || 1;
 };
 

@@ -11,12 +11,10 @@ class ExcitationManager {
     this.excitationRange = {min: 0, max: 100};
     this.currentExcitation = this.excitationRange.min;
     this.serverSocket = new ServerSocket();
-    this.clientSocket = new ClientSocket();
+    this.clientSocket = new ClientSocket(null, {onStart: this.start.bind(this)});
     this.measureSensors();
     this.manageExcitation();
     setTimeout(this.playHelpMessage.bind(this), config.constants.TIME_BEFORE_HELP);
-
-    this.clientSocket.on('start', this.start.bind(this));
   }
 
   measureSensors() {

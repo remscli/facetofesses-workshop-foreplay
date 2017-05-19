@@ -8,7 +8,7 @@ var Audio = function(params) {
   this.loop = params.loop;
   this.type = params.type;
   this.volume = params.volume || 0.9;
-  this._interval = params.interval;
+  this._interval = params.interval || 0;
   this._rate = params.rate || 1;
 };
 

@@ -6,6 +6,11 @@ var AudioManager = {
   howls: [],
 
   play: function (audio, params) {
+    this.playing = true;
+    this.playSound(audio, params);
+  },
+
+  playSound: function(audio, params) {
     console.log(audio.filename + ' -- rate :' + audio.rate() + ' | interval : ' + audio.interval());
 
     if (this.isSpeaking && audio.type == 'VOICE') return;
@@ -28,7 +33,6 @@ var AudioManager = {
     howl.rate(audio.rate());
 
     this.howls.push(howl);
-    this.playing = true;
   },
 
   onEnd: function (audio, params) {
@@ -42,7 +46,7 @@ var AudioManager = {
 
     if (audio.loop === true) {
       setTimeout(() => {
-        this.play(audio);
+        this.playSound(audio);
       }, audio.interval() || 0);
     }
   },
@@ -53,7 +57,7 @@ var AudioManager = {
     });
     this.howls = [];
     this.isSpeaking = false;
-    this.playing = false;
+    playing = false;
   }
 };
 
