@@ -11,8 +11,6 @@ var heartbeatConfig = {
 let ENV;
 
 var App = {
-  firstTouchPlayed: false,
-
   init: function() {
     this.playedAudios = [];
     this.initSocketsEvents();
@@ -77,17 +75,6 @@ var App = {
       range: data.excitationRange
     }).scaleTo(heartbeatConfig.interval.min, heartbeatConfig.interval.max);
     this.heartbeat.interval(newInterval);
-
-    // FIRST TOUCH
-    if (!this.firstTouchPlayed && data.currentExcitation > 5 && !AudioManager.isSpeaking) {
-      var voiceFirstTouch = new Audio({
-        filename: config.audios.firstTouch,
-        type: 'VOICE'
-      });
-      AudioManager.play(voiceFirstTouch);
-      this.playedAudios[voiceFirstTouch.filename] = voiceFirstTouch;
-      this.firstTouchPlayed = true;
-    }
   },
 
   onPlay: function (params) {
@@ -106,7 +93,6 @@ var App = {
     console.log("DISCONNECTED");
     AudioManager.stopAll();
     this.playedAudios = [];
-    this.firstTouchPlayed = false;
   }
 };
 

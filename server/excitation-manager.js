@@ -6,6 +6,7 @@ const ServerSocket = require("./server-socket");
 class ExcitationManager {
   constructor(params) {
     this.playing = true;
+    this.firstTouchPlayed = false;
     this.boards = params.boards;
     this.erogenousZones = params.erogenousZones;
     this.excitationRange = {min: 0, max: 100};
@@ -70,6 +71,11 @@ class ExcitationManager {
       console.log(`EXCITATION : ${Math.round(this.currentExcitation)}   -   ` + debug);
 
       this.serverSocket.emit({type: 'update', excitation: Math.round(this.currentExcitation)});
+
+      if (!this.firstTouchPlayed && this.currentExcitation > 5 && !this.clientSocket.isSpeaking) {
+        this.clientSocket.emit('play', {filename: config.audios.firstTouch, type: 'VOICE'});
+        this.firstTouchPlayed = true;
+      }
     }
   }
 
