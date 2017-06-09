@@ -8,7 +8,6 @@ class Sensor {
     this.threshold = params.threshold;
     this.excitationPower = params.excitationPower;
     this.audio = params.audio;
-    this.lastTouchDate = null;
     this.audioPlayed = false;
     this.isTouched = false;
     this.started = false;
@@ -16,7 +15,6 @@ class Sensor {
 
   stimulate() {
     this.isTouched = false;
-    this.lastTouchDate = Date.now();
 
     let clientSocket = new ClientSocket();
 
@@ -26,7 +24,7 @@ class Sensor {
       this.audioPlayed = true;
     }
 
-    // Divide sensor's excitation power by two because it's called twice per second
+    // Divide sensor's excitation power following update interval
     return this.excitationPower / (1000 / config.constants.UPDATE_INTERVAL);
   }
 }

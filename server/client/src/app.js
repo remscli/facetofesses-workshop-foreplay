@@ -8,6 +8,8 @@ var heartbeatConfig = {
   rate: {min: 1, max: 1.3}
 };
 
+let ENV;
+
 var App = {
   firstTouchPlayed: false,
 
@@ -17,14 +19,15 @@ var App = {
   },
 
   initSocketsEvents: function () {
-    socket.on('connect', this.onStart.bind(this));
+    socket.on('init', this.onStart.bind(this));
     socket.on('update', this.onUpdate.bind(this));
     socket.on('play', this.onPlay.bind(this));
     socket.on('disconnect', this.onDisconnect.bind(this));
   },
 
-  onStart: function () {
+  onStart: function (data) {
     console.log("START");
+    ENV = data.ENV;
 
     // AMBIENT
     this.ambient = new Audio({
@@ -46,16 +49,20 @@ var App = {
     this.playedAudios[config.audios.heartbeat] = this.heartbeat;
 
     // INTRODUCTION
-    var voiceIntro = new Audio({
-      filename: config.audios.intro,
-      type: 'VOICE'
-    });
-    AudioManager.play(voiceIntro, {
-      onEnd: function () {
-        socket.emit('start');
-      }
-    });
-    this.playedAudios[voiceIntro.filename] = voiceIntro;
+    if (ENV === 'production') {
+      var voiceIntro = new Audio({
+        filename: config.audios.intro,
+        type: 'VOICE'
+      });
+      AudioManager.play(voiceIntro, {
+        onEnd: function () {
+          socket.emit('start');
+        }
+      });
+      this.playedAudios[voiceIntro.filename] = voiceIntro;
+    } else {
+      socket.emit('start');
+    }
   },
 
   onUpdate: function (data) {

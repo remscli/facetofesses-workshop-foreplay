@@ -20,6 +20,8 @@ class ClientSocket {
       console.log("CLIENT SOCKET CONNECTED");
       this.socket = socket;
 
+      this.socket.emit('init', {ENV: process.env.NODE_ENV});
+
       this.socket.on('start', this.onStart.bind(this));
       this.socket.on('playEnd', this.onPlayEnd.bind(this));
     });

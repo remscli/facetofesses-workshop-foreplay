@@ -87,10 +87,10 @@ class ExcitationManager {
   }
 
   playHelpMessage() {
-    console.log("PLAY HELP MESSAGE");
     if (!this.playing) return;
 
     if (!this.clientSocket.isSpeaking) {
+      console.log("PLAY HELP MESSAGE");
       this.clientSocket.emit('play', { filename: config.audios.help, type: 'VOICE' });
     } else {
       setTimeout(this.playHelpMessage.bind(this), 10000);
@@ -98,8 +98,13 @@ class ExcitationManager {
   }
 
   end() {
-    console.log("WORKSHOP FINISHED");
-    this.clientSocket.emit('play', { filename: config.audios.end, type: 'VOICE' });
+    if (!this.clientSocket.isSpeaking) {
+      console.log("WORKSHOP FINISHED");
+      this.clientSocket.emit('play', { filename: config.audios.end, type: 'VOICE' });
+    } else {
+      setTimeout(this.end.bind(this), 2000);
+    }
+
     this.playing = false;
   }
 }

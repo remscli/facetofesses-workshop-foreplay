@@ -1,5 +1,7 @@
 'use strict';
 
+console.log("Starting app in " + process.env.NODE_ENV + " environment");
+
 const config = require('./config.json');
 const five = require("johnny-five");
 const SockJS = require('sockjs-client');
@@ -32,20 +34,21 @@ app.listen(config.constants.WEBPAGE_PORT, () => {
 // Open page in default browser
 // opn('http://localhost:' + config.constants.WEBPAGE_PORT);
 
-// Client socket
-let io = SocketIO(server);
-let clientSocket = new ClientSocket(io);
-
-// Server socket
-let sock = new SockJS('http://localhost:8080/ws');
-let serverSocket = new ServerSocket(sock);
-
 let boards = new five.Boards(config.boards, { timeout: 3600 });
 
 // When Arduino board is connected
 boards.on("ready", function() {
   console.log("Boards are ready");
 
+  // Client socket
+  let io = SocketIO(server);
+  let clientSocket = new ClientSocket(io);
+
+  // Server socket
+  let sock = new SockJS('http://localhost:8080/ws');
+  let serverSocket = new ServerSocket(sock);
+
+  // Erogenous zones management
   let erogenousZones = config.erogenousZones.map((erogenousZone) => new ErogenousZone(erogenousZone));
   let excitationManager = new ExcitationManager({boards: this, erogenousZones: erogenousZones});
 });
