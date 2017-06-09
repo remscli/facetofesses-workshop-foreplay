@@ -31,9 +31,6 @@ app.listen(config.constants.WEBPAGE_PORT, () => {
   console.log('Listening on port ' + config.constants.WEBPAGE_PORT);
 });
 
-// Open page in default browser
-// opn('http://localhost:' + config.constants.WEBPAGE_PORT);
-
 let boards = new five.Boards(config.boards, { timeout: 3600 });
 
 // When Arduino board is connected
@@ -47,6 +44,9 @@ boards.on("ready", function() {
   // Server socket
   let sock = new SockJS('http://localhost:8080/ws');
   let serverSocket = new ServerSocket(sock);
+
+  // Open page in default browser
+  // opn('http://localhost:' + config.constants.WEBPAGE_PORT);
 
   // Erogenous zones management
   let erogenousZones = config.erogenousZones.map((erogenousZone) => new ErogenousZone(erogenousZone));
