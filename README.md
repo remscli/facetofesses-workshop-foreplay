@@ -31,5 +31,5 @@ Start node.js server, johnny five server and start browserify watching :
 ```
 $ cd server
 $ npm install
-$ npm run start
+$ npm run dev
 ```
