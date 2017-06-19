@@ -46,7 +46,7 @@ boards.on("ready", function() {
   let serverSocket = new ServerSocket(sock);
 
   // Open page in default browser
-  // opn('http://localhost:' + config.constants.WEBPAGE_PORT);
+  opn('http://localhost:' + config.constants.WEBPAGE_PORT);
 
   // Erogenous zones management
   let erogenousZones = config.erogenousZones.map((erogenousZone) => new ErogenousZone(erogenousZone));
