@@ -25,7 +25,7 @@
     "type": "git",
     "url": "git+https://github.com/remscli/facetofesses-workshop-foreplay.git"
   },
-  "author": "",
+  "author": "Rémy Sclippa <contact@remysclippa.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/remscli/facetofesses-workshop-foreplay/issues"

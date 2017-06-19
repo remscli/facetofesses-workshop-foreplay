@@ -8,7 +8,8 @@ Developed for [Face to Fesses project](http://www.facetofesses.fr/)
 - Add new erogenous zones with ease in `server/config.json`
 - Browserify build for front-end js assets
 - Using CapacitiveSensor Arduino library
-- All logic is handled by the node.js server thanks to Johnny-five
+- All logic is handled by the node.js server thanks to Johnny-five, except for audio (using a web page connected with websocket).
+- Send progress value to main server with websockets for light management.
 
 ## Physical setup
 
@@ -17,7 +18,7 @@ Developed for [Face to Fesses project](http://www.facetofesses.fr/)
 - Use only the digital pins
 - Send pin : 2
 - Sensors receive pins : 4, 7, 8, 12 and 13
-- Wire all receive pins, even if unused. 
+- Wire all receive pins, even if unused.
 
 More informations about cabling here : http://playground.arduino.cc/Main/CapacitiveSensor?from=Main.CapSense
 

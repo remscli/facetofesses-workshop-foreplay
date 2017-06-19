@@ -85,6 +85,7 @@ class ExcitationManager {
         sensor.started = true;
       });
     });
+    console.log("SENSORS STARTED");
   }
 
   decreaseExcitation() {
